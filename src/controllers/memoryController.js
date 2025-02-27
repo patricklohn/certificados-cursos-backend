@@ -24,6 +24,19 @@ const createMemory = async (req, res) => {
     }
 }
 
+const getMemory = async (req,res) =>{ 
+    try {
+        
+        const memories = await Memory.find()
+
+        res.json(memories);
+
+    } catch (error) {
+        res.status(500).json({msg:"Internal error server"})
+    }
+}
+
 export default {
     createMemory,
+    getMemory,
 }
