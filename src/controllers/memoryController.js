@@ -24,7 +24,7 @@ const createMemory = async (req, res) => {
     }
 }
 
-const getMemory = async (req,res) =>{ 
+const getMemorys = async (req,res) =>{ 
     try {
         
         const memories = await Memory.find()
@@ -36,7 +36,26 @@ const getMemory = async (req,res) =>{
     }
 }
 
+const getMemory = async (req,res) =>{
+    try {
+        const id = req.params.id; 
+        
+        const memorie = await Memory.findById(id);
+
+        if(!memorie){
+            return res.status(404).json({msg:"Memoria não encontrada"})
+        }
+
+        res.json(memorie);
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({msg:"Internal error server"})
+    }
+}
+
 export default {
     createMemory,
+    getMemorys,
     getMemory,
 }

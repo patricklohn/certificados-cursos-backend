@@ -5,6 +5,7 @@ import middlewareUpload from "../helpers/middlewareUpload.js";
 const memoryRouter = Router();
 
 memoryRouter.post("/", middlewareUpload.upload.single("image"), middlewareUpload.uploadMiddleware, MemoryController.createMemory);
-memoryRouter.get("/", MemoryController.getMemory);
+memoryRouter.get("/", MemoryController.getMemorys);
+memoryRouter.get("/:id", MemoryController.getMemory);
 
 export default memoryRouter;
