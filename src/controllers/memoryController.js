@@ -85,9 +85,51 @@ const deleteMemory = async(req,res) => {
     }
 }
 
+const updateMemory = async(req,res) =>{
+    try {
+        const title = req.body.title
+        const description = req.body.description
+        let src = null
+
+        console.log(title)
+
+        if(req.file){
+            src = `${req.file.filename}`
+        }
+
+        const memorie = await Memory.findById(req.params.id)
+
+        if(!memorie){
+            return res.status(404).json({msg:"Memoria não encontrada"})
+        }
+
+        if(src){
+            removeOldImage(memorie)
+        }
+
+        const updateData = {}
+
+    if(title) updateData.title = title;
+    if(description) updateData.description = description;
+    if(src) updateData.src = src
+
+    const updateMemorie = await Memory.findByIdAndUpdate(req.params.id, updateData, { new: true})
+
+    console.log(req.params.id)
+    console.log(updateData)
+    res.json({msg:"Memoria atualizada com sucesso", updateMemorie })
+
+
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({msg: "Internal error server"})
+    }
+}
+
 export default {
     createMemory,
     getMemorys,
     getMemory,
-    deleteMemory
+    deleteMemory,
+    updateMemory
 }

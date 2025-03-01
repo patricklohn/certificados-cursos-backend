@@ -24,12 +24,12 @@ const fileFilter = (req,file, cb) => {
     }
 }; 
 
-const upload = multer({
+export const upload = multer({
     storage,
     fileFilter
 })
 
-function uploadMiddleware(req,res,next){
+ export function uploadMiddleware(req,res,next){
     const image = req.file; 
 
     if(!image){
@@ -37,9 +37,4 @@ function uploadMiddleware(req,res,next){
     }
 
     next()
-}
-
-export default {
-    uploadMiddleware, 
-    upload,
 }
