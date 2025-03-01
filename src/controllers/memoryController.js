@@ -54,8 +54,27 @@ const getMemory = async (req,res) =>{
     }
 }
 
+const deleteMemory = async(req,res) => {
+    try {
+        const {id} = req.params;
+        const memorie = await Memory.findById(id);
+        if(!memorie){
+            return res.status(404).json({msg:"Memoria não encontrada"})
+        }
+
+        await Memory.findByIdAndDelete(id);
+        res.status(200).json({msg:"Memoria deletada com sucesso",memorie});
+
+        
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({msg: "Internal error server"})
+    }
+}
+
 export default {
     createMemory,
     getMemorys,
     getMemory,
+    deleteMemory
 }
