@@ -126,10 +126,30 @@ const updateMemory = async(req,res) =>{
     }
 }
 
+const toggleFavorite = async(req,res)=>{
+    try {
+        const {id} = req.params;
+        const memorie = await Memory.findById(id);
+        if(!memorie){
+            return res.status(404).json({msg:"Memoria não encontrada"})
+        }
+
+        memorie.favorite = !memorie.favorite;
+        await Memory.save();
+        res.status(200).json({msg:"Memoria alterada",memorie});
+
+        
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({msg: "Internal error server"})
+    }
+}
+
 export default {
     createMemory,
     getMemorys,
     getMemory,
     deleteMemory,
-    updateMemory
+    updateMemory,
+    toggleFavorite
 }
