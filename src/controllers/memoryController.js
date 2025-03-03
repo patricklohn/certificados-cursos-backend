@@ -145,11 +145,38 @@ const toggleFavorite = async(req,res)=>{
     }
 }
 
+const addComment = async (req,res) =>{
+    try {
+        const {id} = req.params;
+        const {name, text} = req.body
+        if(!name || !text){
+            return res.status(400).sjson({msg: "Campos não informadados."})
+        }
+        const comment = {name, text};
+
+        const memorie = await Memory.findById(id);
+        if(!memorie){
+            return res.status(404).json({msg:"Memoria não encontrada"})
+        }
+
+        memorie.comments.push(comment)
+        await Memory.save();
+        
+        res.status(200).json({msg:"Comentario inserido com sucesso.",memorie});
+
+        
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({msg: "Internal error server"})
+    }
+}
+
 export default {
     createMemory,
     getMemorys,
     getMemory,
     deleteMemory,
     updateMemory,
-    toggleFavorite
+    toggleFavorite,
+    addComment,
 }

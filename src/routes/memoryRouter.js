@@ -9,6 +9,7 @@ memoryRouter.get("/", MemoryController.getMemorys);
 memoryRouter.get("/:id", MemoryController.getMemory);
 memoryRouter.delete("/:id", MemoryController.deleteMemory);
 memoryRouter.patch("/:id", upload.single("image"), MemoryController.updateMemory);
-memoryRouter.patch("/favorite?:id", MemoryController.toggleFavorite);
+memoryRouter.patch("/favorite/:id", MemoryController.toggleFavorite);
+memoryRouter.patch("/:id/comment", MemoryController.addComment);
 
 export default memoryRouter;
