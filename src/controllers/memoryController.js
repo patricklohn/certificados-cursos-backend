@@ -150,7 +150,7 @@ const addComment = async (req,res) =>{
         const {id} = req.params;
         const {name, text} = req.body
         if(!name || !text){
-            return res.status(400).sjson({msg: "Campos não informadados."})
+            return res.status(400).json({msg: "Campos não informadados."})
         }
         const comment = {name, text};
 
@@ -160,7 +160,7 @@ const addComment = async (req,res) =>{
         }
 
         memorie.comments.push(comment)
-        await Memory.save();
+        await memorie.save();
         
         res.status(200).json({msg:"Comentario inserido com sucesso.",memorie});
 
